@@ -1,0 +1,27 @@
+version: "3"
+services:
+  react-app:
+    image: aakash1998gadekar/readandreturn_frontend:latest
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - mysql-app
+  api-server:
+    image: aakash1998gadekar/readandreturn_backend:latest
+    ports:
+      - "1111:1111"
+    networks:
+      - mysql-app
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    volumes:
+      - mysql-data:/data/db
+networks:
+  mysql-app:
+    driver: bridge
+volumes:
+  mysql-data:
+    driver: local
